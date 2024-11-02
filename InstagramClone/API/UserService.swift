@@ -17,4 +17,12 @@ struct UserService {
             completion(user)
         }
     }
+    
+    static func fetchUsers(completion: @escaping([User]) -> Void) {
+        REF_USERS.observe(.value) { snapshot in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            let users = dictionaries.map({ User(uid: $0.key, dictionary: $0.value as! [String: Any]) })
+            completion(users)
+        }
+    }
 }
