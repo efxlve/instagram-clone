@@ -17,6 +17,8 @@ struct User {
     
     var isFollowing = false
     
+    var stats: UserStats!
+    
     var isCurrentUser: Bool {
         return Auth.auth().currentUser?.uid == uid
     }
@@ -27,5 +29,16 @@ struct User {
         self.fullname = dictionary["fullname"] as? String ?? ""
         self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
+        
+        if let stats = dictionary["stats"] as? [String: Int] {
+            self.stats = UserStats(followers: stats["followers"] ?? 0, following: stats["following"] ?? 0)
+        } else {
+            self.stats = UserStats(followers: 0, following: 0)
+        }
     }
+}
+
+struct UserStats {
+    var followers: Int
+    var following: Int
 }
