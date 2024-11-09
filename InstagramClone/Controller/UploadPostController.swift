@@ -21,15 +21,15 @@ class UploadPostController: UIViewController {
     
     private lazy var captionTextView: InputTextView = {
         let tv = InputTextView()
-        //tv.placeholderText = "Enter caption.."
+        tv.placeholderText = "Enter caption.."
         tv.font = UIFont.systemFont(ofSize: 16)
-        //tv.delegate = self
+        tv.delegate = self
         return tv
     }()
     
     private let characterCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .secondaryLabel
+        label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 14)
         label.text = "0/100"
         return label
@@ -40,6 +40,7 @@ class UploadPostController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        view.backgroundColor = .systemBackground
     }
     
     // MARK: - Actions
@@ -54,8 +55,15 @@ class UploadPostController: UIViewController {
     
     // MARK: - Helpers
     
+    func checkMaxLength(_ textView: UITextView) {
+        if (textView.text.count) > 100 {
+            textView.deleteBackward()
+        }
+    }
+    
     func configureUI() {
         navigationItem.title = "Upload Post"
+        navigationItem.titleView?.tintColor = .label
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleCancel))
         
@@ -72,5 +80,15 @@ class UploadPostController: UIViewController {
         
         view.addSubview(characterCountLabel)
         characterCountLabel.anchor(bottom: captionTextView.bottomAnchor, right: view.rightAnchor, paddingBottom: -8, paddingRight: 12)
+    }
+}
+
+// MARK: - UITextViewDelegate
+
+extension UploadPostController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        checkMaxLength(textView)
+        let count = textView.text.count
+        characterCountLabel.text = "\(count)/100"
     }
 }

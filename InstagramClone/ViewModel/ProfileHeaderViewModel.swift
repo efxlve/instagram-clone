@@ -35,10 +35,6 @@ struct ProfileHeaderViewModel {
         }
     }
     
-    var followButtonTextColor: UIColor {
-        return user.isFollowing ? .label : .white
-    }
-    
     var numberOfFollowers: NSAttributedString {
         return attributedStatText(value: user.stats.followers, label: "followers")
     }

@@ -152,7 +152,7 @@ class ProfileHeader: UICollectionReusableView {
         nameLabel.text = viewModel.fullname
         
         editProfileFollowButton.setTitle(viewModel.followButtonText, for: .normal)
-        editProfileFollowButton.setTitleColor(viewModel.followButtonTextColor, for: .normal)
+        editProfileFollowButton.setTitleColor(.label, for: .normal)
         editProfileFollowButton.backgroundColor = viewModel.followButtonBackgroundColor
         
         postsLabel.attributedText = viewModel.numberOfPosts
