@@ -1,5 +1,5 @@
 {
-  "originHash" : "91a30084786010b54bd5dab0fddb121ce8dae6c64ee6dbd91460928c6a3854f6",
+  "originHash" : "c8ee5502eba58ff6e27c8ab0dae55fedfa0b85a5b2e4e4922078f617aa382866",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -80,6 +80,15 @@
       "state" : {
         "revision" : "2d12673670417654f08f5f90fdd62926dc3a2648",
         "version" : "100.0.0"
+      }
+    },
+    {
+      "identity" : "jgprogresshud",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JonasGessner/JGProgressHUD",
+      "state" : {
+        "revision" : "78d7cd35f1d90ff74fd82e486f2cbe4b24be8cf9",
+        "version" : "2.2.0"
       }
     },
     {

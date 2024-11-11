@@ -6,10 +6,10 @@
 //
 
 import UIKit
-//import JGProgressHUD
+import JGProgressHUD
 
 extension UIViewController {
-    //static let hud = JGProgressHUD(style: .dark)
+    static let hud = JGProgressHUD(style: .dark)
     
     func configureGradientLayer() {
         let gradient = CAGradientLayer()
@@ -23,9 +23,9 @@ extension UIViewController {
         view.endEditing(true)
         
         if show {
-            //UIViewController.hud.show(in: view)
+            UIViewController.hud.show(in: view)
         } else {
-            //UIViewController.hud.dismiss()
+            UIViewController.hud.dismiss()
         }
     }
     
