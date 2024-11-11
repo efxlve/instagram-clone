@@ -16,3 +16,9 @@ let REF_USERS = REF_DB.child("users")
 
 let REF_FOLLOWING = REF_DB.child("following")
 let REF_FOLLOWERS = REF_DB.child("followers")
+
+let REF_NOTIFICATIONS = REF_DB.child("notifications")
+let REF_LIKES = REF_DB.child("likes")
+let REF_POSTS = REF_DB.child("posts")
+let REF_COMMENTS = REF_DB.child("comments")
+
