@@ -137,6 +137,7 @@ class FeedCell: UICollectionViewCell {
         usernameButton.setTitle(viewModel.username, for: .normal)
         
         likesLabel.text = viewModel.likesLabelText
+        postTimeLabel.text = viewModel.timestampString
     }
     
     func configureActionButtons() {

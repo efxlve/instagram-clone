@@ -31,9 +31,9 @@ struct User {
         self.username = dictionary["username"] as? String ?? ""
         
         if let stats = dictionary["stats"] as? [String: Int] {
-            self.stats = UserStats(followers: stats["followers"] ?? 0, following: stats["following"] ?? 0)
+            self.stats = UserStats(followers: stats["followers"] ?? 0, following: stats["following"] ?? 0, posts: stats["posts"] ?? 0)
         } else {
-            self.stats = UserStats(followers: 0, following: 0)
+            self.stats = UserStats(followers: 0, following: 0, posts: 0)
         }
     }
 }
@@ -41,4 +41,5 @@ struct User {
 struct UserStats {
     var followers: Int
     var following: Int
+    let posts: Int
 }

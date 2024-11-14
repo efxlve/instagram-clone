@@ -55,8 +55,12 @@ struct UserService {
             let followers = snapshot.children.allObjects.count
             REF_FOLLOWING.child(uid).observeSingleEvent(of: .value) { snapshot in
                 let following = snapshot.children.allObjects.count
-                let stats = UserStats(followers: followers, following: following)
-                completion(stats)
+                
+                REF_POSTS.queryOrdered(byChild: "ownerUid").queryEqual(toValue: uid).observeSingleEvent(of: .value) { snapshot in
+                    let posts = snapshot.children.allObjects.count
+                    let stats = UserStats(followers: followers, following: following, posts: posts)
+                    completion(stats)
+                }
             }
         }
     }

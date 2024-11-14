@@ -11,12 +11,15 @@ class ProfileCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    var viewModel: PostViewModel? {
+        didSet { configure() }
+    }
+    
     private let postImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.backgroundColor = .lightGray
-        iv.image = #imageLiteral(resourceName: "venom-7")
         return iv
     }()
     
@@ -35,6 +38,7 @@ class ProfileCell: UICollectionViewCell {
     // MARK: - Helpers
     
     func configure() {
-        
+        guard let viewModel = viewModel else { return }
+        postImageView.sd_setImage(with: viewModel.imageUrl)
     }
 }

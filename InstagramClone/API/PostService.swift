@@ -35,4 +35,14 @@ struct PostService {
             completion(posts)
         }
     }
+    
+    static func fetchPosts(forUser uid: String, completion: @escaping([Post]) -> Void) {
+        let query = REF_POSTS.queryOrdered(byChild: "ownerUid").queryEqual(toValue: uid)
+        
+        query.observe(.value) { snapshot in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            let posts = dictionaries.map({ Post(postId: $0.key, dictionary: $0.value as! [String: Any]) })
+            completion(posts)
+        }
+    }
 }
