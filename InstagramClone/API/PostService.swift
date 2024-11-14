@@ -25,4 +25,12 @@ struct PostService {
             REF_POSTS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
         }
     }
+    
+    static func fetchPosts(completion: @escaping([Post]) -> Void) {
+        REF_POSTS.observe(.value) { snapshot in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            let posts = dictionaries.map({ Post(postId: $0.key, dictionary: $0.value as! [String: Any]) })
+            completion(posts)
+        }
+    }
 }
