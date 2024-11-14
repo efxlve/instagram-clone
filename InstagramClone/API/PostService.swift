@@ -41,7 +41,8 @@ struct PostService {
         
         query.observe(.value) { snapshot in
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
-            let posts = dictionaries.map({ Post(postId: $0.key, dictionary: $0.value as! [String: Any]) })
+            var posts = dictionaries.map({ Post(postId: $0.key, dictionary: $0.value as! [String: Any]) })
+            posts.sort(by: { $0.timestamp.seconds > $1.timestamp.seconds })
             completion(posts)
         }
     }
