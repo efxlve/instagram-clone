@@ -12,7 +12,7 @@ import FirebaseAuth
 
 struct PostService {
     
-    static func uploadPost(caption: String, image: UIImage, completion: @escaping DatabaseCompletion) {
+    static func uploadPost(caption: String, image: UIImage, user: User, completion: @escaping DatabaseCompletion) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         ImageUploader.uploadPostImage(image: image) { imageUrl in
@@ -20,7 +20,9 @@ struct PostService {
                                          "timestamp": Int(NSDate().timeIntervalSince1970),
                                          "likes": 0,
                                          "imageUrl": imageUrl,
-                                         "ownerUid": uid]
+                                         "ownerUid": uid,
+                                         "ownerImageUrl": user.profileImageUrl,
+                                         "ownerUsername": user.username]
             
             REF_POSTS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
         }
