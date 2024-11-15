@@ -12,13 +12,13 @@ struct Comment {
     let username: String
     let profileImageUrl: String
     let timestamp: Timestamp
-    let comment: String
+    let commentText: String
     
     init(id: String, dictionary: [String: Any]) {
         self.id = id
         self.username = dictionary["username"] as? String ?? ""
         self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
-        self.comment = dictionary["comment"] as? String ?? ""
+        self.commentText = dictionary["comment"] as? String ?? ""
         self.timestamp = dictionary["timestamp"] as? Timestamp ?? Timestamp(date: Date())
     }
 }
