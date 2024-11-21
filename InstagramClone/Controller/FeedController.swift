@@ -146,8 +146,6 @@ extension FeedController: FeedCellDelegate {
     }
     
     func cell(_ cell: FeedCell, didLike post: Post) {
-        guard let tab = tabBarController as? MainTabController else { return }
-        
         cell.viewModel?.post.didLike.toggle()
         
         if post.didLike {
