@@ -16,6 +16,7 @@ struct Post {
     let postId: String
     var ownerImageUrl: String = ""
     var ownerUsername: String = ""
+    var didLike = false
     
     init(postId: String, dictionary: [String: Any]) {
         self.postId = postId

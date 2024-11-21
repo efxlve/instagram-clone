@@ -22,3 +22,6 @@ let REF_LIKES = REF_DB.child("likes")
 let REF_POSTS = REF_DB.child("posts")
 let REF_COMMENTS = REF_DB.child("comments")
 
+let REF_POST_LIKES = REF_DB.child("post-likes")
+let REF_USER_LIKES = REF_DB.child("user-likes")
+

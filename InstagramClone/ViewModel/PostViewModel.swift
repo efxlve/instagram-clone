@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import UIKit
 
 struct PostViewModel {
-    let post: Post
+    var post: Post
     
     var username: String {
         return post.ownerUsername
@@ -28,6 +29,14 @@ struct PostViewModel {
     
     var likes: Int {
         return post.likes
+    }
+    
+    var likeButtonTintColor: UIColor {
+        return post.didLike ? .red : .label
+    }
+    
+    var likeButtonImage: UIImage {
+        return post.didLike ? #imageLiteral(resourceName: "like_selected") : #imageLiteral(resourceName: "like_unselected")
     }
     
     var likesLabelText: String {
