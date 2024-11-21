@@ -11,8 +11,7 @@ import FirebaseAuth
 typealias DatabaseCompletion = ((Error?, DatabaseReference) -> Void)
 
 struct UserService {
-    static func fetchUser(completion: @escaping(User) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    static func fetchUser(withUid uid: String, completion: @escaping(User) -> Void) {
         REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             let user = User(uid: uid, dictionary: dictionary)

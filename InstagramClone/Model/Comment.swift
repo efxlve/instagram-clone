@@ -8,14 +8,14 @@
 import Firebase
 
 struct Comment {
-    let id: String
+    let uid: String
     let username: String
     let profileImageUrl: String
     let timestamp: Timestamp
     let commentText: String
     
     init(id: String, dictionary: [String: Any]) {
-        self.id = id
+        self.uid = dictionary["uid"] as? String ?? ""
         self.username = dictionary["username"] as? String ?? ""
         self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
         self.commentText = dictionary["comment"] as? String ?? ""
