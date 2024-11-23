@@ -14,8 +14,8 @@ struct Comment {
     let timestamp: Timestamp
     let commentText: String
     
-    init(id: String, dictionary: [String: Any]) {
-        self.uid = dictionary["uid"] as? String ?? ""
+    init(uid: String, dictionary: [String: Any]) {
+        self.uid = uid
         self.username = dictionary["username"] as? String ?? ""
         self.profileImageUrl = dictionary["profileImageUrl"] as? String ?? ""
         self.commentText = dictionary["comment"] as? String ?? ""

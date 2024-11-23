@@ -22,15 +22,14 @@ struct CommentService {
         }
     }
     
-    static func fetchComments(forPost postID: String, withCompletionBlock: @escaping([Comment]) -> Void) {
+    static func fetchComments(forPost postID: String, completion: @escaping([Comment]) -> Void) {
         var comments = [Comment]()
         
         REF_COMMENTS.child(postID).observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
-            let commentID = snapshot.key
-            let comment = Comment(id: commentID, dictionary: dictionary)
+            let comment = Comment(uid: snapshot.key, dictionary: dictionary)
             comments.append(comment)
-            withCompletionBlock(comments)
+            completion(comments)
         }
     }
 }
