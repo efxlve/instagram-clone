@@ -10,7 +10,7 @@ import FirebaseAuth
 
 struct NotificationService {
     
-    static func uploadNotification(toUid uid: String, type: NotificationType, post: Post? = nil, completion: ((Error?) -> Void)? = nil) {
+    static func uploadNotification(toUid uid: String, fromUser: User, type: NotificationType, post: Post? = nil, completion: ((Error?) -> Void)? = nil) {
         guard let currentUid = Auth.auth().currentUser?.uid else {
             completion?(NSError(domain: "AuthError", code: 401, userInfo: [NSLocalizedDescriptionKey: "User is not authenticated."]))
             return
@@ -23,9 +23,11 @@ struct NotificationService {
         let ref = REF_NOTIFICATIONS.child(uid)
         
         var data: [String: Any] = ["timestamp": Int(NSDate().timeIntervalSince1970),
-                                   "uid": currentUid,
+                                   "uid": fromUser.uid,
                                    "type": type.rawValue,
-                                   "id": ref.key as Any]
+                                   "id": ref.key as Any,
+                                   "userProfileImageUrl": fromUser.profileImageUrl,
+                                   "username": fromUser.username]
         
         if let post = post {
             data["postImageUrl"] = post.imageUrl
