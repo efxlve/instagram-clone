@@ -30,6 +30,7 @@ struct Notification {
     let id: String
     let userProfileImageUrl: String
     let username: String
+    var userIsFollowed = false
     
     init(uid: String, dictionary: [String: Any]) {
         self.uid = uid

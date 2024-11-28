@@ -47,6 +47,14 @@ struct PostService {
         }
     }
     
+    static func fetchPost(withPostId postId: String, completion: @escaping(Post) -> Void) {
+        REF_POSTS.child(postId).observeSingleEvent(of: .value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            let post = Post(postId: postId, dictionary: dictionary)
+            completion(post)
+        }
+    }
+    
     static func likePost(post: Post, completion: @escaping(DatabaseCompletion)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         REF_POSTS.child(post.postId).child("likes").setValue(post.likes + 1)
