@@ -25,6 +25,8 @@ struct PostService {
                                          "ownerUsername": user.username]
             
             REF_POSTS.childByAutoId().updateChildValues(values, withCompletionBlock: completion)
+            
+            self.updateUserFeedAfterPost(postId: REF_POSTS.childByAutoId().key!)
         }
     }
     
@@ -93,14 +95,32 @@ struct PostService {
         }
     }
     
-    static func updateUserFeedAfterFollowing(user: User) {
+    static func updateUserFeedAfterFollowing(user: User, didFollow: Bool) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let query = REF_POSTS.queryOrdered(byChild: "ownerUid").queryEqual(toValue: user.uid)
         query.observeSingleEvent(of: .value) { snapshot, error in
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
-            dictionaries.forEach { key, value in
-                REF_USER_FEED.child(uid).child(key).updateChildValues(value as! [String: Any])
+            let postIds = Array(dictionaries.keys)
+            
+            postIds.forEach { postId in
+                if didFollow {
+                    REF_USER_FEED.child(uid).updateChildValues([postId: 1])
+                } else {
+                    REF_USER_FEED.child(uid).child(postId).removeValue()
+                }
             }
+        }
+    }
+    
+    private static func updateUserFeedAfterPost(postId: String) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        REF_FOLLOWERS.child(uid).observe(.value) { snapshot in
+            guard let followers = snapshot.value as? [String: Int] else { return }
+            followers.forEach { followerUid, _ in
+                REF_USER_FEED.child(followerUid).updateChildValues([postId: 1])
+            }
+            
+            REF_USER_FEED.child(uid).updateChildValues([postId: 1])
         }
     }
 }
