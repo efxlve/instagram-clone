@@ -78,4 +78,29 @@ struct PostService {
             completion(snapshot.exists())
         }
     }
+    
+    static func fetchFeedPosts(completion: @escaping([Post]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        var posts = [Post]()
+        
+        REF_USER_FEED.child(uid).observe(.value) { snapshot in
+            snapshot.children.allObjects.forEach { child in
+                fetchPost(withPostId: (child as! DataSnapshot).key) { post in
+                    posts.append(post)
+                    completion(posts)
+                }
+            }
+        }
+    }
+    
+    static func updateUserFeedAfterFollowing(user: User) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let query = REF_POSTS.queryOrdered(byChild: "ownerUid").queryEqual(toValue: user.uid)
+        query.observeSingleEvent(of: .value) { snapshot, error in
+            guard let dictionaries = snapshot.value as? [String: Any] else { return }
+            dictionaries.forEach { key, value in
+                REF_USER_FEED.child(uid).child(key).updateChildValues(value as! [String: Any])
+            }
+        }
+    }
 }
