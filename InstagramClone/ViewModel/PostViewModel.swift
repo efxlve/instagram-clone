@@ -55,7 +55,7 @@ struct PostViewModel {
         formatter.maximumUnitCount = 1
         formatter.unitsStyle = .abbreviated
         let now = Date()
-        return formatter.string(from: post.timestamp.dateValue(), to: now) ?? "2m"
+        return formatter.string(from: post.timestamp, to: now) ?? "2m"
     }
     
     init(post: Post) {

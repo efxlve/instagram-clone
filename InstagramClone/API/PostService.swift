@@ -41,10 +41,9 @@ struct PostService {
     static func fetchPosts(forUser uid: String, completion: @escaping([Post]) -> Void) {
         let query = REF_POSTS.queryOrdered(byChild: "ownerUid").queryEqual(toValue: uid)
         
-        query.observe(.value) { snapshot in
+        query.observeSingleEvent(of: .value) { snapshot in
             guard let dictionaries = snapshot.value as? [String: Any] else { return }
-            var posts = dictionaries.map({ Post(postId: $0.key, dictionary: $0.value as! [String: Any]) })
-            posts.sort(by: { $0.timestamp.seconds > $1.timestamp.seconds })
+            let posts = dictionaries.map({ Post(postId: $0.key, dictionary: $0.value as! [String: Any]) })
             completion(posts)
         }
     }

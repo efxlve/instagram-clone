@@ -25,7 +25,7 @@ struct Notification {
     let uid: String
     var postImageUrl: String?
     var postId: String?
-    let timestamp: Timestamp
+    let timestamp: Date!
     let type: NotificationType
     let id: String
     let userProfileImageUrl: String
@@ -34,7 +34,7 @@ struct Notification {
     
     init(uid: String, dictionary: [String: Any]) {
         self.uid = uid
-        self.timestamp = dictionary["timestamp"] as? Timestamp ?? Timestamp(date: Date())
+        self.timestamp = Date(timeIntervalSince1970: TimeInterval(dictionary["timestamp"] as? Int ?? 0))
         self.id = dictionary["id"] as? String ?? ""
         self.postId = dictionary["postId"] as? String
         self.postImageUrl = dictionary["postImageUrl"] as? String
