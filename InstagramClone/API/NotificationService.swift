@@ -47,7 +47,7 @@ struct NotificationService {
         
         let ref = REF_NOTIFICATIONS.child(currentUid)
         
-        ref.observeSingleEvent(of: .value) { snapshot in
+        ref.queryOrdered(byChild: "timestamp").observeSingleEvent(of: .value) { snapshot in
             guard let dictionaries = snapshot.value as? [String: Any] else {
                 completion([])
                 return
@@ -58,7 +58,9 @@ struct NotificationService {
                 return Notification(uid: currentUid, dictionary: dictionary)
             }
             
-            completion(notifications)
+            let sortedNotifications = notifications.sorted { $0.timestamp > $1.timestamp }
+            
+            completion(sortedNotifications)
         }
     }
 }
