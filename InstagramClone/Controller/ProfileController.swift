@@ -16,6 +16,7 @@ class ProfileController: UICollectionViewController {
     
     private var user: User
     private var posts = [Post]()
+    private let refreshControl = UIRefreshControl()
     
     // MARK: - Lifecycle
     
@@ -56,6 +57,7 @@ class ProfileController: UICollectionViewController {
         PostService.fetchPosts(forUser: user.uid) { posts in
             self.posts = posts
             self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
         }
     }
     
@@ -66,6 +68,18 @@ class ProfileController: UICollectionViewController {
         collectionView.backgroundColor = .systemBackground
         collectionView.register(ProfileCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerIdentifier)
+        
+        // Add refresh control
+        collectionView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+    }
+    
+    // MARK: - Selectors
+    
+    @objc func handleRefresh() {
+        fetchPosts() 
+        fetchUserStats()
+        checkIfUserIsFollowed()
     }
 }
 
@@ -147,4 +161,3 @@ extension ProfileController: ProfileHeaderDelegate {
         }
     }
 }
-    
