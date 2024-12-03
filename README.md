@@ -1,5 +1,5 @@
 <h1>
-  <img src="https://github.com/user-attachments/assets/0f243549-7a76-4a98-8a23-a0bf3d7e453e" alt="Instagram Icon" width="40" />
+  <img src="https://github.com/user-attachments/assets/0f243549-7a76-4a98-8a23-a0bf3d7e453e" alt="Instagram Icon" width="35" />
   Instagram Clone
 </h1>
 
