@@ -64,7 +64,6 @@ Instagram Clone is a fully functional iOS application built with Swift, mimickin
   <summary>Explore Page</summary>
     <img width="400" alt="image" src="https://github.com/user-attachments/assets/a5fe974f-7644-4b64-a798-d53c2d7ed952">
     <img width="400" alt="image" src="https://github.com/user-attachments/assets/094eb692-7218-419e-bffb-c020dd8ac6a3">
-
     <img width="400" alt="image" src="https://github.com/user-attachments/assets/807f6858-4df1-471b-a240-267ee4dd4c15">
     <img width="400" alt="image" src="https://github.com/user-attachments/assets/7e9f9169-1719-422d-9775-d1d20fecb121">
 </details>
