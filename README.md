@@ -1,4 +1,4 @@
-# Instagram Clone
+# # ![Instagram_icon](https://github.com/user-attachments/assets/0f243549-7a76-4a98-8a23-a0bf3d7e453e) Instagram Clone
 
 Instagram Clone is a fully functional iOS application built with Swift, mimicking the core features of Instagram. This project uses Firebase as a backend for authentication, database, and storage.
 
