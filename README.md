@@ -135,7 +135,7 @@ Instagram Clone is a fully functional iOS application built with Swift, mimickin
      - Add the file to your project under the main directory.
 
 5. Build and run the project:
-     - Ensure you have a valid iOS device or simulator running iOS 14+.
+     - Ensure you have a valid iOS device or simulator running iOS 15+.
      - Press `Cmd + R` in Xcode to run the app.
 
 ---
