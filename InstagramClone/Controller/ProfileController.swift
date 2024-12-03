@@ -61,6 +61,16 @@ class ProfileController: UICollectionViewController {
         }
     }
     
+    func fetchUserData() {
+        UserService.fetchUser(withUid: user.uid) { updatedUser in
+            self.user = updatedUser
+            DispatchQueue.main.async {
+                self.navigationItem.title = updatedUser.username
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
     // MARK: - Helpers
     
     func configureCollectionView() {
@@ -77,7 +87,8 @@ class ProfileController: UICollectionViewController {
     // MARK: - Selectors
     
     @objc func handleRefresh() {
-        fetchPosts() 
+        fetchUserData()
+        fetchPosts()
         fetchUserStats()
         checkIfUserIsFollowed()
     }
@@ -141,7 +152,11 @@ extension ProfileController: ProfileHeaderDelegate {
         guard let currentUser = tab.user else { return }
         
         if user.isCurrentUser {
-            print("DEBUG: Show edit profile here..")
+            let controller = EditProfileController()
+            controller.user = currentUser
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            present(nav, animated: true, completion: nil)
         } else if user.isFollowing {
             UserService.unfollowUser(uid: user.uid) { (ref, err) in
                 self.user.isFollowing = false

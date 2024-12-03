@@ -62,4 +62,43 @@ struct UserService {
             }
         }
     }
+    
+    static func updateUserData(values: [String: Any], completion: @escaping(DatabaseCompletion)) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERS.child(uid).updateChildValues(values) { error, ref in
+            if let error = error {
+                print("DEBUG: Failed to update user data with error \(error.localizedDescription)")
+                completion(error, ref)
+                return
+            }
+            print("DEBUG: Successfully updated user data")
+            completion(nil, ref)
+        }
+    }
+    
+    static func updateProfileImage(image: UIImage, completion: @escaping(String) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return }
+        
+        let filename = NSUUID().uuidString
+        let ref = STORAGE_PROFILE_IMAGES.child(filename)
+
+        ref.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                print("DEBUG: Failed to upload image with error \(error.localizedDescription)")
+                return
+            }
+
+            ref.downloadURL { url, error in
+                if let error = error {
+                    print("DEBUG: Failed to fetch download URL with error \(error.localizedDescription)")
+                    return
+                }
+
+                guard let profileImageUrl = url?.absoluteString else { return }
+                print("DEBUG: Successfully uploaded image with URL \(profileImageUrl)")
+                completion(profileImageUrl)
+            }
+        }
+    }
 }
