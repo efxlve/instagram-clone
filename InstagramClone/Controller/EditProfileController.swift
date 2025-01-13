@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EditProfileController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -50,6 +51,14 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
         stack.spacing = 12
         stack.distribution = .fillEqually
         return stack
+    }()
+    
+    private lazy var LogoutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log Out", for: .normal)
+        button.setTitleColor(.systemRed, for: .normal)
+        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+        return button
     }()
     
     // MARK: - Lifecycle
@@ -146,6 +155,10 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
         
         view.addSubview(stack)
         stack.anchor(top: changeProfilePhotoButton.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 24, paddingLeft: 16, paddingRight: 16)
+        
+        view.addSubview(LogoutButton)
+        LogoutButton.centerX(inView: view)
+        LogoutButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 16)
     }
     
     // MARK: - Actions
@@ -156,6 +169,21 @@ class EditProfileController: UIViewController, UIImagePickerControllerDelegate, 
         picker.allowsEditing = true
         picker.sourceType = .photoLibrary
         present(picker, animated: true, completion: nil)
+    }
+    
+    @objc func handleLogout() {
+        do {
+            try Auth.auth().signOut()
+            DispatchQueue.main.async {
+                let controller = LoginController()
+                controller.delegate = self.tabBarController as? MainTabController
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+        } catch {
+            print("DEBUG: Error signing out")
+        }
     }
     
     @objc func handleSave() {

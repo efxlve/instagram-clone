@@ -40,21 +40,6 @@ class FeedController: UICollectionViewController {
         collectionView.refreshControl?.endRefreshing()
     }
     
-    @objc func handleLogout() {
-        do {
-            try Auth.auth().signOut()
-            DispatchQueue.main.async {
-                let controller = LoginController()
-                controller.delegate = self.tabBarController as? MainTabController
-                let nav = UINavigationController(rootViewController: controller)
-                nav.modalPresentationStyle = .fullScreen
-                self.present(nav, animated: true, completion: nil)
-            }
-        } catch {
-            print("DEBUG: Error signing out")
-        }
-    }
-    
     // MARK: - API
     
     func fetchPosts() {
@@ -92,12 +77,6 @@ class FeedController: UICollectionViewController {
             navigationItem.title = "Feed"
         } else {
             navigationItem.title = "Post"
-        }
-        
-       
-        // Logout button
-        if post == nil {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         }
         
         let refresher = UIRefreshControl()
@@ -187,3 +166,5 @@ extension FeedController: FeedCellDelegate {
         }
     }
 }
+
+

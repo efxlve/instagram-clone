@@ -24,6 +24,8 @@ class MainTabController: UITabBarController {
         super.viewDidLoad()
         checkIfUserIsLoggedIn()
         fetchUser()
+        
+        tabBar.addCustomBackgroundColor()
     }
     
     // MARK: - API
@@ -139,3 +141,17 @@ extension MainTabController: UploadPostControllerDelegate {
         feed.handleRefresh()
     }
 }
+
+extension UITabBar {
+    func addCustomBackgroundColor() {
+        self.backgroundImage = UIImage()
+        self.shadowImage = UIImage()
+        
+        let backgroundView = UIView(frame: self.bounds)
+        backgroundView.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.7)
+        backgroundView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        self.insertSubview(backgroundView, at: 0)
+    }
+}
+
